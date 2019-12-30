@@ -30,3 +30,21 @@
 *.exe
 *.out
 *.app
+
+
+# End of C++ template
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.db
+*.vc.db
+*.suo
+
+#Shell
+.vs/

@@ -1,0 +1,16 @@
+[submodule "BLDC_DRV8323H"]
+	path = BLDC_DRV8323H
+	url = git@github.com:fezaragoza/BLDC_DRV8323H.git
+	branch = master
+[submodule "PWM_ESP32"]
+	path = PWM_ESP32
+	url = git@github.com:fezaragoza/PWM_ESP32.git
+	branch = master
+[submodule "ESP32_External_Interrupt"]
+	path = ESP32_External_Interrupt
+	url = git@github.com:fezaragoza/ESP32_External_Interrupt.git
+	branch = master
+[submodule "ESP32_Timer_Interrupt"]
+	path = ESP32_Timer_Interrupt
+	url = git@github.com:fezaragoza/ESP32_Timer_Interrupt.git
+	branch = master

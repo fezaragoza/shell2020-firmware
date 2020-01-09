@@ -36,6 +36,12 @@
     <ClInclude Include="..\..\PWM_ESP32\PWM_ESP32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ESP32_Timer_Interrupt\ESP32_TimInterrupt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ESP32_Timer_Interrupt\Module.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\PWM_ESP32\PWM_ESP32.cpp">
@@ -45,6 +51,12 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\BLDC_DRV8323H\DRV8323H.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ESP32_Timer_Interrupt\ESP32_TimInterrupt.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ESP32_Timer_Interrupt\Module.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>

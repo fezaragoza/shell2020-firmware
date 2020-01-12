@@ -1,11 +1,11 @@
 /*
  Author:            Escuderia Borregos CCM.
  Description:       ESP32 Firmware code for the Shell Eco-marathon 2020 @ Sonoma, CA.
- Colaborators:      Israel Cayetano, Fernando Zaragoza, Angel Romero
+ Colaborators:      Israel Cayetano, Fernando Zaragoza
 */
 
 /******************************************************************
- *                         I N C L U D E S                        *
+ *            I N C L U D E S   &  D E F I N E S                   *
  ******************************************************************/
 
 #include "DRV8323H.h"                   // #include "PWM_ESP32.h" is included in the BLDC Driver header file.
@@ -13,14 +13,10 @@
 #include "ESP32_TimInterrupt.h"
 #include "Module.h"
 
- /*****************************************************************
- *                  C L A S S   I N S T A N C E S                 *
- ******************************************************************/
-Timer timer0;
-Timer timer1;
+#define SERIAL_DEBUG 1
 
  /*****************************************************************
- *                G L O B A L   D E F I N I T I O N S             *
+ *                G L O B A L   F U N C T I O N S                *
  ******************************************************************/
 static void printHello(void) {
     Serial.println("Hello");
@@ -33,19 +29,33 @@ const moduleDesc_S prints2 = {
     NULL,
 };
 
+ /*****************************************************************
+ *               G L O B A L    D E C L A R A T I O N S             *
+ ******************************************************************/
+static const uint8_t inh[]      = INH_NIMU_PINS;
+static const uint8_t inl[]      = INL_NIMU_PINS;
+static const uint8_t encoder[]  = ENC_NIMU_PINS;
+
+/*****************************************************************
+*                  C L A S S   I N S T A N C E S                 *
+******************************************************************/
+Timer   timer0;
+Timer   timer1;
+BLDC    motor(inh, inl, encoder, 24, 34);
+
 /*****************************************************************
 *                       S E T U P    L O O P                     *
 ******************************************************************/
+static const moduleDesc_S moduleCLK_1[] = { motor.DRV_desc, prints2, prints };
+
 void setup(void) {
 # if SERIAL_DEBUG
     Serial.begin(115200);
 # endif
-    static const moduleDesc_S moduleCLK_1[] = {prints, prints2, prints};
 
     timer1.interruptInit(LEDC_TIMER1, MS1000);
-    //timer0.interruptInit(LEDC_TIMER0, MS50);
+    timer0.interruptInit(LEDC_TIMER0, MS50);
     timer1.modulesInit(COUNTOF(moduleCLK_1), moduleCLK_1); 
-
 }
 
 /*****************************************************************
@@ -64,5 +74,17 @@ void loop(void) {
         Serial.println(timer1.flag.counter);
 # endif
     }
+    if (motor.encA.available() || motor.encB.available() || motor.encC.available())
+    {
+        motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
+    }
+    //else if (motor.encB.available())
+    //{
+    //    motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
+    //}
+    //else if (motor.encC.available())
+    //{
+    //    motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
+    //}
 }
 

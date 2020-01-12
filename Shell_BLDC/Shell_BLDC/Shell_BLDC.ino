@@ -13,8 +13,6 @@
 #include "ESP32_TimInterrupt.h"
 #include "Module.h"
 
-#define SERIAL_DEBUG 1
-
  /*****************************************************************
  *                G L O B A L   F U N C T I O N S                *
  ******************************************************************/
@@ -35,13 +33,13 @@ const moduleDesc_S prints2 = {
 static const uint8_t inh[]      = INH_NIMU_PINS;
 static const uint8_t inl[]      = INL_NIMU_PINS;
 static const uint8_t encoder[]  = ENC_NIMU_PINS;
-
+static const uint8_t n_fault     = 24;
 /*****************************************************************
 *                  C L A S S   I N S T A N C E S                 *
 ******************************************************************/
 Timer   timer0;
 Timer   timer1;
-BLDC    motor(inh, inl, encoder, 24, 34);
+BLDC    motor(inh, inl, encoder, n_fault);
 
 /*****************************************************************
 *                       S E T U P    L O O P                     *
@@ -54,7 +52,7 @@ void setup(void) {
 # endif
 
     timer1.interruptInit(LEDC_TIMER1, MS1000);
-    timer0.interruptInit(LEDC_TIMER0, MS50);
+    //timer0.interruptInit(LEDC_TIMER0, MS50);
     timer1.modulesInit(COUNTOF(moduleCLK_1), moduleCLK_1); 
 }
 
@@ -76,15 +74,8 @@ void loop(void) {
     }
     if (motor.encA.available() || motor.encB.available() || motor.encC.available())
     {
-        motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
+        motor.doSequence(FORWARD, 5);
     }
-    //else if (motor.encB.available())
-    //{
-    //    motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
-    //}
-    //else if (motor.encC.available())
-    //{
-    //    motor.doSequence(motor.encA.getState(), motor.encB.getState(), motor.encC.getState(), FORWARD, 10);
-    //}
+
 }
 

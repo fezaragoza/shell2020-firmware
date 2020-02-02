@@ -33,13 +33,12 @@ const moduleDesc_S prints2 = {
 static const uint8_t inh[]      = INH_NIMU_PINS;
 static const uint8_t inl[]      = INL_NIMU_PINS;
 static const uint8_t encoder[]  = ENC_NIMU_PINS;
-static const uint8_t n_fault     = 24;
 /*****************************************************************
 *                  C L A S S   I N S T A N C E S                 *
 ******************************************************************/
 Timer   timer0;
 Timer   timer1;
-BLDC    motor(inh, inl, encoder, n_fault);
+BLDC    motor(inh, inl, encoder);
 
 /*****************************************************************
 *                       S E T U P    L O O P                     *
